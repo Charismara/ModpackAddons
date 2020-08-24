@@ -2,6 +2,7 @@ package de.blutmondgilde.modpackaddons;
 
 import de.blutmondgilde.modpackaddons.config.Config;
 import de.blutmondgilde.modpackaddons.util.Constants;
+import de.blutmondgilde.modpackaddons.util.ImageUtils;
 import de.blutmondgilde.modpackaddons.util.LogHelper;
 import de.blutmondgilde.modpackaddons.util.PlaceholderUtils;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +37,28 @@ public class ModpackAddons {
             changeWindowTitle();
         }
 
+        if (Config.isIconChangerEnabled.get()) {
+            changeIcon();
+        }
 
         if (Config.isServerManagementEnabled.get()) {
             setupServerList();
+        }
+    }
+
+    private static void changeIcon() {
+        if (Config.pathOrUrl.get().startsWith("http")) {
+            try {
+                ImageUtils.loadFromUrl();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                ImageUtils.loadFromPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
