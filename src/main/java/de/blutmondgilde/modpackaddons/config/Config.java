@@ -27,6 +27,8 @@ public class Config {
     /* =========== Display Category =========== */
     public static ForgeConfigSpec.BooleanValue isTitleChangerEnabled;
     public static ForgeConfigSpec.ConfigValue<String> windowTitle;
+    public static ForgeConfigSpec.BooleanValue isIconChangerEnabled;
+    public static ForgeConfigSpec.ConfigValue<String> pathOrUrl;
 
     static {
         CLIENT_BUILDER.comment("Display").push(CATEGORY_DISPLAY);
@@ -36,6 +38,12 @@ public class Config {
         windowTitle = CLIENT_BUILDER
                 .comment("The new name of the MineCraft window", "Placeholders: %mcversion%, %forgeversion%")
                 .define("windowTitle", "MineCraft %mcversion%");
+        isIconChangerEnabled = CLIENT_BUILDER
+                .comment("Enables the Icon changer Feature")
+                .define("customIcon", false);
+        pathOrUrl = CLIENT_BUILDER
+                .comment("Path or URL to the PNG File", "Example Path: resources/icon.png. Don't use \\!", "Example URL: http://www.example.com/icon.png")
+                .define("url", "https://icons.iconarchive.com/icons/papirus-team/papirus-apps/32/minecraft-icon.png");
         CLIENT_BUILDER.pop();
 
 
