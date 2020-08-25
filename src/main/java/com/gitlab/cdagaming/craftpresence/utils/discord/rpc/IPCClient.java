@@ -23,6 +23,7 @@ import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe.PipeSt
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.exceptions.NoDiscordClientException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import de.blutmondgilde.modpackaddons.util.LogHelper;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -174,9 +175,7 @@ public final class IPCClient implements Closeable {
 
         pipe = Pipe.openPipe(this, clientId, callbacks, preferredOrder);
 
-        if (debugMode) {
-            ModUtils.LOG.debugInfo("Client is now connected and ready!");
-        }
+        LogHelper.getLogger("IPCClient").debug("Client is now connected and ready!");
 
         if (listener != null)
             listener.onReady(this);
@@ -219,9 +218,7 @@ public final class IPCClient implements Closeable {
     public void sendRichPresence(RichPresence presence, Callback callback) {
         checkConnected(true);
 
-        if (debugMode) {
-            ModUtils.LOG.debugInfo("Sending RichPresence to discord: " + (presence == null ? null : presence.toDecodedJson(encoding)));
-        }
+        LogHelper.getLogger("IPCClient").debug("Sending RichPresence to discord: " + (presence == null ? null : presence.toDecodedJson(encoding)));
 
         // Setup and Send JsonObject Data Representing an RPC Update
         JsonObject finalObject = new JsonObject(),
@@ -270,9 +267,7 @@ public final class IPCClient implements Closeable {
         if (!sub.isSubscribable())
             throw new IllegalStateException("Cannot subscribe to " + sub + " event!");
 
-        if (debugMode) {
-            ModUtils.LOG.debugInfo(String.format("Subscribing to Event: %s", sub.name()));
-        }
+        LogHelper.getLogger("IPCClient").debug(String.format("Subscribing to Event: %s", sub.name()));
 
         JsonObject pipeData = new JsonObject();
         pipeData.addProperty("cmd", "SUBSCRIBE");
@@ -285,9 +280,7 @@ public final class IPCClient implements Closeable {
         checkConnected(true);
 
         if (user != null) {
-            if (debugMode) {
-                ModUtils.LOG.debugInfo(String.format("Sending response to %s as %s", user.getName(), approvalMode.name()));
-            }
+            LogHelper.getLogger("IPCClient").debug(String.format("Sending response to %s as %s", user.getName(), approvalMode.name()));
 
             JsonObject pipeData = new JsonObject();
             pipeData.addProperty("cmd", approvalMode == ApprovalMode.ACCEPT ? "SEND_ACTIVITY_JOIN_INVITE" : "CLOSE_ACTIVITY_REQUEST");
@@ -327,9 +320,7 @@ public final class IPCClient implements Closeable {
         try {
             pipe.close();
         } catch (IOException e) {
-            if (debugMode) {
-                ModUtils.LOG.debugInfo(String.format("Failed to close pipe: %s", e));
-            }
+            LogHelper.getLogger("IPCClient").debug(String.format("Failed to close pipe: %s", e));
         }
     }
 
@@ -415,28 +406,20 @@ public final class IPCClient implements Closeable {
                                 break;
 
                             case ACTIVITY_JOIN:
-                                if (debugMode) {
-                                    ModUtils.LOG.debugInfo("Reading thread received a 'join' event.");
-                                }
+                                LogHelper.getLogger("IPCClient").debug("Reading thread received a 'join' event.");
                                 break;
 
                             case ACTIVITY_SPECTATE:
-                                if (debugMode) {
-                                    ModUtils.LOG.debugInfo("Reading thread received a 'spectate' event.");
-                                }
+                                LogHelper.getLogger("IPCClient").debug("Reading thread received a 'spectate' event.");
                                 break;
 
                             case ACTIVITY_JOIN_REQUEST:
-                                if (debugMode) {
-                                    ModUtils.LOG.debugInfo("Reading thread received a 'join request' event.");
-                                }
+                                LogHelper.getLogger("IPCClient").debug("Reading thread received a 'join request' event.");
                                 break;
 
                             case UNKNOWN:
-                                if (debugMode) {
-                                    ModUtils.LOG.debugInfo("Reading thread encountered an event with an unknown type: " +
-                                            json.getAsJsonPrimitive("evt").getAsString());
-                                }
+                                LogHelper.getLogger("IPCClient").debug("Reading thread encountered an event with an unknown type: " +
+                                        json.getAsJsonPrimitive("evt").getAsString());
                                 break;
                             default:
                                 break;
@@ -485,9 +468,7 @@ public final class IPCClient implements Closeable {
             }
         }, "IPCClient-Reader");
 
-        if (debugMode) {
-            ModUtils.LOG.debugInfo("Starting IPCClient reading thread!");
-        }
+        LogHelper.getLogger("IPCClient").debug("Starting IPCClient reading thread!");
         readThread.start();
     }
 

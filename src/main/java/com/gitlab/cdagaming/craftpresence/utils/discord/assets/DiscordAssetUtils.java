@@ -23,12 +23,12 @@
  */
 package com.gitlab.cdagaming.craftpresence.utils.discord.assets;
 
-import com.gitlab.cdagaming.craftpresence.CraftPresence;
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.gitlab.cdagaming.craftpresence.utils.StringUtils;
 import com.gitlab.cdagaming.craftpresence.utils.UrlUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import de.blutmondgilde.modpackaddons.util.Constants;
+import de.blutmondgilde.modpackaddons.util.LogHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -161,7 +161,6 @@ public class DiscordAssetUtils {
             final Random randomObj = new Random();
             return ICON_LIST.get(randomObj.nextInt(ICON_LIST.size()));
         } catch (Exception ex) {
-            ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.config.invalidicon.empty"));
             ex.printStackTrace();
             return "";
         }
@@ -171,12 +170,10 @@ public class DiscordAssetUtils {
      * Retrieves and Synchronizes the List of Available Discord Assets from the Client ID
      */
     public static void loadAssets() {
-        ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.discord.assets.load", CraftPresence.CONFIG.clientID));
-        ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.discord.assets.load.credits"));
         ASSET_LIST = Maps.newHashMap();
 
         try {
-            final String url = "https://discord.com/api/oauth2/applications/" + CraftPresence.CONFIG.clientID + "/assets";
+            final String url = "https://discord.com/api/oauth2/applications/" + Constants.DISCORD_CLIENT_ID + "/assets";
             final DiscordAsset[] assets = UrlUtils.getJSONFromURL(url, DiscordAsset[].class);
 
             if (assets != null) {
@@ -209,33 +206,11 @@ public class DiscordAssetUtils {
                 }
             }
         } catch (Exception ex) {
-            ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.discord.assets.load"));
+            LogHelper.getLogger("Discord/Assets").fatal("Exception while loading Assets");
             ex.printStackTrace();
         } finally {
-            verifyConfigAssets();
             syncCompleted = true;
-            ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.discord.assets.detected", String.valueOf(ASSET_LIST.size())));
-        }
-    }
-
-    /**
-     * Ensures any Default Icons in the Config exist within the Client ID
-     */
-    private static void verifyConfigAssets() {
-        boolean needsFullUpdate = false;
-        for (String property : CraftPresence.CONFIG.properties.stringPropertyNames()) {
-            if ((property.equals(CraftPresence.CONFIG.NAME_defaultIcon) || property.equals(CraftPresence.CONFIG.NAME_defaultDimensionIcon) || property.equals(CraftPresence.CONFIG.NAME_defaultServerIcon)) && !contains(CraftPresence.CONFIG.properties.getProperty(property))) {
-                final String newAsset = contains(CraftPresence.CONFIG.defaultIcon) ? CraftPresence.CONFIG.defaultIcon : getRandomAsset();
-                ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.config.invalidicon.pre", CraftPresence.CONFIG.properties.getProperty(property), property));
-                CraftPresence.CONFIG.properties.setProperty(property, newAsset);
-                needsFullUpdate = true;
-                ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.config.invalidicon.post", property, newAsset));
-            }
-        }
-
-        if (needsFullUpdate) {
-            CraftPresence.CONFIG.save("UTF-8");
-            CraftPresence.CONFIG.read(false, "UTF-8");
+            LogHelper.getLogger("Discord/Assets").debug("Assets Synchronized");
         }
     }
 }

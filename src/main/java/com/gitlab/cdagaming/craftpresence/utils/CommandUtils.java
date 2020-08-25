@@ -24,13 +24,8 @@
 package com.gitlab.cdagaming.craftpresence.utils;
 
 import com.gitlab.cdagaming.craftpresence.CraftPresence;
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.gitlab.cdagaming.craftpresence.impl.Tuple;
-import com.gitlab.cdagaming.craftpresence.utils.curse.CurseUtils;
 import com.gitlab.cdagaming.craftpresence.utils.discord.assets.DiscordAssetUtils;
-import com.gitlab.cdagaming.craftpresence.utils.mcupdater.MCUpdaterUtils;
-import com.gitlab.cdagaming.craftpresence.utils.multimc.MultiMCUtils;
-import com.gitlab.cdagaming.craftpresence.utils.technic.TechnicUtils;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -51,81 +46,12 @@ public class CommandUtils {
      */
     public static boolean isLoadingGame = false;
 
-    /**
-     * Reloads and Synchronizes Data, as needed, and performs onTick Events
-     *
-     * @param forceUpdateRPC Whether to Force an Update to the RPC Data
-     */
-    public static void reloadData(final boolean forceUpdateRPC) {
-        ModUtils.TRANSLATOR.onTick();
-        CraftPresence.SYSTEM.onTick();
-        CraftPresence.KEYBINDINGS.onTick();
-        CraftPresence.GUIS.onTick();
-
-        if (!isInMainMenu) {
-            CraftPresence.BIOMES.onTick();
-            CraftPresence.DIMENSIONS.onTick();
-            CraftPresence.TILE_ENTITIES.onTick();
-            CraftPresence.ENTITIES.onTick();
-            CraftPresence.SERVER.onTick();
-
-            if (forceUpdateRPC) {
-                if (CraftPresence.DIMENSIONS.isInUse) {
-                    CraftPresence.DIMENSIONS.updateDimensionPresence();
-                }
-                if (CraftPresence.GUIS.isInUse) {
-                    CraftPresence.GUIS.updateGUIPresence();
-                }
-                if (CraftPresence.TILE_ENTITIES.isInUse) {
-                    CraftPresence.TILE_ENTITIES.updateEntityPresence();
-                }
-                if (CraftPresence.ENTITIES.isInUse) {
-                    CraftPresence.ENTITIES.updateEntityPresence();
-                }
-                if (CraftPresence.SERVER.isInUse) {
-                    CraftPresence.SERVER.updateServerPresence();
-                }
-                if (CraftPresence.BIOMES.isInUse) {
-                    CraftPresence.BIOMES.updateBiomePresence();
-                }
-            }
-        }
-    }
-
-    /**
-     * Restarts and Initializes the RPC Data
-     */
-    public static void rebootRPC() {
-        CraftPresence.CLIENT.shutDown();
-        CraftPresence.SYSTEM.HAS_LOADED = false;
-
-        if (!CraftPresence.CLIENT.CLIENT_ID.equals(CraftPresence.CONFIG.clientID)) {
-            DiscordAssetUtils.emptyData();
-            CraftPresence.CLIENT.CLIENT_ID = CraftPresence.CONFIG.clientID;
-        } else {
-            DiscordAssetUtils.clearClientData();
-        }
-        DiscordAssetUtils.loadAssets();
-        CraftPresence.CLIENT.init();
-    }
 
     /**
      * Initializes Essential Data<p>
      * (In this case, Pack Data and Available RPC Icons)
      */
     public static void init() {
-        if (CraftPresence.CONFIG.detectCurseManifest && !CraftPresence.packFound) {
-            CurseUtils.loadManifest();
-        }
-        if (CraftPresence.CONFIG.detectMultiMCManifest && !CraftPresence.packFound) {
-            MultiMCUtils.loadInstance();
-        }
-        if (CraftPresence.CONFIG.detectMCUpdaterInstance && !CraftPresence.packFound) {
-            MCUpdaterUtils.loadInstance();
-        }
-        if (CraftPresence.CONFIG.detectTechnicPack && !CraftPresence.packFound) {
-            TechnicUtils.loadPack();
-        }
         DiscordAssetUtils.loadAssets();
     }
 
@@ -142,10 +68,6 @@ public class CommandUtils {
         }
 
         CraftPresence.CLIENT.STATUS = "ready";
-        CraftPresence.CLIENT.clearPartyData(true, false);
-
-        CraftPresence.CLIENT.syncArgument("&MAINMENU&", StringUtils.sequentialReplaceAnyCase(CraftPresence.CONFIG.loadingMSG, loadingArgs), false);
-        CraftPresence.CLIENT.syncArgument("&MAINMENU&", CraftPresence.CLIENT.imageOf(CraftPresence.CONFIG.defaultIcon, "", false), true);
 
         isLoadingGame = true;
     }
@@ -168,9 +90,6 @@ public class CommandUtils {
 
             isLoadingGame = false;
         }
-
-        CraftPresence.CLIENT.syncArgument("&MAINMENU&", StringUtils.sequentialReplaceAnyCase(CraftPresence.CONFIG.mainmenuMSG, mainMenuArgs), false);
-        CraftPresence.CLIENT.syncArgument("&MAINMENU&", CraftPresence.CLIENT.imageOf(CraftPresence.CONFIG.defaultIcon, "", false), true);
 
         isInMainMenu = true;
     }

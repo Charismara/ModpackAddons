@@ -98,19 +98,13 @@ public class FileUtils {
      */
     public static void downloadFile(final String urlString, final File file) {
         try {
-            ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.download.init", file.getName(), file.getAbsolutePath(), urlString));
             final URL url = new URL(urlString);
             if (file.exists()) {
-                final boolean fileDeleted = file.delete();
-                if (!fileDeleted) {
-                    ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.delete.file", file.getName()));
-                }
+                file.delete();
             }
 
             org.apache.commons.io.FileUtils.copyURLToFile(url, file);
-            ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.download.loaded", file.getName(), file.getAbsolutePath(), urlString));
         } catch (Exception ex) {
-            ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.download", file.getName(), urlString, file.getAbsolutePath()));
             ex.printStackTrace();
         }
     }
@@ -122,14 +116,11 @@ public class FileUtils {
      */
     public static void loadFileAsDLL(final File file) {
         try {
-            ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.dll.init", file.getName()));
             boolean isPermsSet = file.setReadable(true) && file.setWritable(true);
             if (isPermsSet) {
                 System.load(file.getAbsolutePath());
             }
-            ModUtils.LOG.info(ModUtils.TRANSLATOR.translate("craftpresence.logger.info.dll.loaded", file.getName()));
         } catch (Exception ex) {
-            ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.dll", file.getName()));
             ex.printStackTrace();
         }
     }

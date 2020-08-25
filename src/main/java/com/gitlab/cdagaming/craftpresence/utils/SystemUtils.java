@@ -23,8 +23,6 @@
  */
 package com.gitlab.cdagaming.craftpresence.utils;
 
-import com.gitlab.cdagaming.craftpresence.CraftPresence;
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -126,38 +124,7 @@ public class SystemUtils {
             final List<String> x64 = Lists.newArrayList("amd64", "x86_64");
             IS_64_BIT = x64.contains(OS_ARCH);
         } catch (Exception ex) {
-            ModUtils.LOG.error(ModUtils.TRANSLATOR.translate("craftpresence.logger.error.system"));
             ex.printStackTrace();
-        }
-    }
-
-    /**
-     * The Event to Run on each Client Tick, if passed initialization events
-     * <p>
-     * Comprises of Synchronizing Data, and Updating Timer-Related Data as needed
-     */
-    void onTick() {
-        ELAPSED_TIME = (System.currentTimeMillis() - CURRENT_TIMESTAMP) / 1000L;
-
-        if (TIMER > 0) {
-            if (!isTiming) {
-                startTimer();
-            } else {
-                checkTimer();
-            }
-        }
-
-        // Every <passTime> Seconds, refresh Callbacks and load state status
-        if (ELAPSED_TIME % CraftPresence.CONFIG.refreshRate == 0) {
-            if (!refreshedCallbacks) {
-                if (!HAS_LOADED && (!StringUtils.isNullOrEmpty(CraftPresence.CLIENT.STATUS) && CraftPresence.CLIENT.STATUS.equalsIgnoreCase("ready"))) {
-                    HAS_LOADED = true;
-                }
-                CraftPresence.CLIENT.updatePresence(CraftPresence.CLIENT.buildRichPresence());
-                refreshedCallbacks = true;
-            }
-        } else {
-            refreshedCallbacks = false;
         }
     }
 

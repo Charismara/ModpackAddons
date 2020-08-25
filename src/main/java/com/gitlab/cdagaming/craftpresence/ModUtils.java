@@ -24,12 +24,12 @@
 package com.gitlab.cdagaming.craftpresence;
 
 import com.gitlab.cdagaming.craftpresence.utils.StringUtils;
-import com.gitlab.cdagaming.craftpresence.utils.TranslationUtils;
-import com.gitlab.cdagaming.craftpresence.utils.updater.ModUpdaterUtils;
 import com.google.common.collect.Lists;
+import de.blutmondgilde.modpackaddons.util.LogHelper;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.SharedConstants;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -108,25 +108,13 @@ public class ModUtils {
      */
     public static final String FINGERPRINT = "@FINGERPRINT@";
 
-    /**
-     * The Application's Instance of {@link ModLogger} for Logging Information
-     */
-    public static final ModLogger LOG = new ModLogger(MODID);
+    public static final Logger LOG = LogHelper.getLogger("DiscordModule");
 
     /**
      * The Current Thread's Class Loader, used to dynamically receive data as needed
      */
     public static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
-    /**
-     * The Application's Instance of {@link TranslationUtils} for Localization and Translating Data Strings
-     */
-    public static final TranslationUtils TRANSLATOR = new TranslationUtils(MODID, true);
-
-    /**
-     * The Application's Instance of {@link ModUpdaterUtils} for Retrieving if the Application has an update
-     */
-    public static final ModUpdaterUtils UPDATER = new ModUpdaterUtils(MODID, UPDATE_JSON, VERSION_ID);
 
     /**
      * If this Application is running/needs Legacy Data
@@ -151,7 +139,6 @@ public class ModUtils {
      * @param encoding The Charset Encoding to parse character data in
      */
     public static void loadCharData(final boolean Update, final String encoding) {
-        LOG.info(TRANSLATOR.translate(true, "craftpresence.logger.info.chardata.init"));
         final String fileName = "chardata.properties", charDataPath = "/assets/" + MODID + "/" + fileName;
         final File charDataDir = new File(MODID + File.separator + fileName);
         boolean UpdateStatus = Update || !charDataDir.exists(), errored = false;
@@ -166,7 +153,6 @@ public class ModUtils {
                 errored = true;
             }
 
-            LOG.info(TRANSLATOR.translate(true, "craftpresence.logger.info.download.init", fileName, charDataDir.getAbsolutePath(), charDataPath));
             inputData = StringUtils.getResourceAsStream(ModUtils.class, charDataPath);
 
             // Write Data from Local charData to Directory if Update is needed
@@ -179,7 +165,6 @@ public class ModUtils {
                         outputData.write(transferBuffer, 0, readBuffer);
                     }
 
-                    LOG.info(TRANSLATOR.translate(true, "craftpresence.logger.info.download.loaded", fileName, charDataDir.getAbsolutePath(), charDataPath));
                 } catch (Exception ex) {
                     errored = true;
                 }
@@ -240,14 +225,11 @@ public class ModUtils {
                 outputData.close();
             }
         } catch (Exception ex) {
-            LOG.error(TRANSLATOR.translate(true, "craftpresence.logger.error.dataclose"));
             ex.printStackTrace();
         } finally {
             if (errored) {
-                LOG.error(TRANSLATOR.translate(true, "craftpresence.logger.error.chardata"));
                 forceBlockTooltipRendering = true;
             } else {
-                LOG.info(TRANSLATOR.translate(true, "craftpresence.logger.info.chardata.loaded"));
                 forceBlockTooltipRendering = false;
             }
         }
@@ -323,7 +305,6 @@ public class ModUtils {
                         outputData.close();
                     }
                 } catch (Exception ex) {
-                    LOG.error(TRANSLATOR.translate(true, "craftpresence.logger.error.dataclose"));
                     ex.printStackTrace();
                 }
             }

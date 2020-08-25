@@ -16,7 +16,6 @@
 
 package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe;
 
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Callback;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
@@ -63,26 +62,16 @@ public class UnixPipe extends Pipe {
         int readResult = is.read(d);
         ByteBuffer bb = ByteBuffer.wrap(d);
 
-        if (ipcClient.isDebugMode()) {
-            ModUtils.LOG.debugInfo(String.format("Read Byte Data: %s with result %s", new String(d), readResult));
-        }
 
         Packet.OpCode op = Packet.OpCode.values()[Integer.reverseBytes(bb.getInt())];
         d = new byte[Integer.reverseBytes(bb.getInt())];
 
         int reversedResult = is.read(d);
 
-        if (ipcClient.isDebugMode()) {
-            ModUtils.LOG.debugInfo(String.format("Read Reversed Byte Data: %s with result %s", new String(d), reversedResult));
-        }
 
         JsonObject packetData = new JsonObject();
         packetData.addProperty("", new String(d));
         Packet p = new Packet(op, packetData, ipcClient.getEncoding());
-
-        if (ipcClient.isDebugMode()) {
-            ModUtils.LOG.debugInfo(String.format("Received packet: %s", p.toString()));
-        }
 
         if (listener != null)
             listener.onPacketReceived(ipcClient, p);
@@ -96,10 +85,6 @@ public class UnixPipe extends Pipe {
 
     @Override
     public void close() throws IOException {
-        if (ipcClient.isDebugMode()) {
-            ModUtils.LOG.debugInfo("Closing IPC pipe...");
-        }
-
         status = PipeStatus.CLOSING;
         send(Packet.OpCode.CLOSE, new JsonObject(), null);
         status = PipeStatus.CLOSED;

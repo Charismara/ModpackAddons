@@ -16,7 +16,6 @@
 
 package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe;
 
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Callback;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
@@ -70,10 +69,6 @@ public class WindowsPipe extends Pipe {
         packetData.addProperty("", new String(d));
         Packet p = new Packet(op, packetData, ipcClient.getEncoding());
 
-        if (ipcClient.isDebugMode()) {
-            ModUtils.LOG.debugInfo(String.format("Received packet: %s", p.toString()));
-        }
-
         if (listener != null)
             listener.onPacketReceived(ipcClient, p);
         return p;
@@ -81,10 +76,6 @@ public class WindowsPipe extends Pipe {
 
     @Override
     public void close() throws IOException {
-        if (ipcClient.isDebugMode()) {
-            ModUtils.LOG.debugInfo("Closing IPC pipe...");
-        }
-
         status = PipeStatus.CLOSING;
         send(Packet.OpCode.CLOSE, new JsonObject(), null);
         status = PipeStatus.CLOSED;

@@ -60,9 +60,6 @@ public abstract class Pipe {
         for (int i = 0; i < 10; i++) {
             try {
                 String location = getPipeLocation(i);
-                if (ipcClient.isDebugMode()) {
-                    ModUtils.LOG.debugInfo(String.format("Searching for IPC: %s", location));
-                }
                 pipe = createPipe(ipcClient, callbacks, location);
 
                 if (pipe != null) {
@@ -90,16 +87,8 @@ public abstract class Pipe {
                             userData.has("avatar") && userData.get("avatar").isJsonPrimitive() ? userData.getAsJsonPrimitive("avatar").getAsString() : null
                     );
 
-                    if (ipcClient.isDebugMode()) {
-                        ModUtils.LOG.debugInfo(String.format("Found a valid client (%s) with packet: %s", pipe.build.name(), p.toString()));
-                        ModUtils.LOG.debugInfo(String.format("Found a valid user (%s) with id: %s", pipe.currentUser.getName(), pipe.currentUser.getId()));
-                    }
-
                     // we're done if we found our first choice
                     if (pipe.build == preferredOrder[0] || DiscordBuild.ANY == preferredOrder[0]) {
-                        if (ipcClient.isDebugMode()) {
-                            ModUtils.LOG.debugInfo(String.format("Found preferred client: %s", pipe.build.name()));
-                        }
                         break;
                     }
 
@@ -119,9 +108,6 @@ public abstract class Pipe {
             // check each of the rest to see if we have that
             for (int i = 1; i < preferredOrder.length; i++) {
                 DiscordBuild cb = preferredOrder[i];
-                if (ipcClient.isDebugMode()) {
-                    ModUtils.LOG.debugInfo(String.format("Looking for client build: %s", cb.name()));
-                }
 
                 if (open[cb.ordinal()] != null) {
                     pipe = open[cb.ordinal()];
@@ -136,9 +122,6 @@ public abstract class Pipe {
                         }
                     } else pipe.build = cb;
 
-                    if (ipcClient.isDebugMode()) {
-                        ModUtils.LOG.debugInfo(String.format("Found preferred client: %s", pipe.build.name()));
-                    }
                     break;
                 }
             }
@@ -153,12 +136,8 @@ public abstract class Pipe {
             if (open[i] != null) {
                 try {
                     open[i].close();
-                } catch (IOException ex) {
-                    // This isn't really important to applications and better
-                    // as debug info
-                    if (ipcClient.isDebugMode()) {
-                        ModUtils.LOG.debugError(String.format("Failed to close an open IPC pipe: %s", ex));
-                    }
+                } catch (IOException ignored) {
+
                 }
             }
         }
@@ -229,9 +208,6 @@ public abstract class Pipe {
             if (callback != null && !callback.isEmpty())
                 callbacks.put(nonce, callback);
             write(p.toBytes());
-            if (ipcClient.isDebugMode()) {
-                ModUtils.LOG.debugInfo(String.format("Sent packet: %s", p.toDecodedString()));
-            }
 
             if (listener != null)
                 listener.onPacketSent(ipcClient, p);
