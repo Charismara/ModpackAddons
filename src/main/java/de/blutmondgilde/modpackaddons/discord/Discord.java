@@ -1,6 +1,5 @@
 package de.blutmondgilde.modpackaddons.discord;
 
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.gitlab.cdagaming.craftpresence.utils.discord.ModIPCListener;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.RichPresence;
@@ -16,7 +15,7 @@ public class Discord {
         try {
             // Create IPC Instance and Listener and Make a Connection if possible
             logger.debug("Create Instance...");
-            ipcInstance = new IPCClient(Long.parseLong(Constants.DISCORD_CLIENT_ID), ModUtils.IS_DEV);
+            ipcInstance = new IPCClient(Long.parseLong(Constants.DISCORD_CLIENT_ID));
             logger.debug("Add Listener...");
             ipcInstance.setListener(new ModIPCListener());
             logger.debug("Connect to Discord...");
@@ -34,4 +33,17 @@ public class Discord {
     public void sendRichPresence(RichPresence richPresence) {
         this.ipcInstance.sendRichPresence(richPresence);
     }
+
+    public enum Dimensions {
+        Overworld,
+        Nether,
+        End;
+    }
+
+    public enum GameMode {
+        Singeplayer,
+        Multiplayer;
+    }
+
+
 }

@@ -10,32 +10,29 @@ public enum RPPresets {
             .setStartTimestamp(System.currentTimeMillis())
             .setLargeImage("icon", "Minecraft Forge")
             .setSmallImage("mainmenu", "In the main menu")
-            .build()
     ),
     SinglePlayer(new RichPresence.Builder()
             .setState("In singleplayer")
             .setDetails(Config.modpackName.get())
             .setStartTimestamp(System.currentTimeMillis())
-            .setLargeImage("overworld", "In the Overworld") //TODO change Dimension to current Player dim
+            .setLargeImage("overworld", "In the Overworld")
             .setSmallImage("singleplayer", "In singleplayer")
-            .build()
     ),
     MultiPlayer(new RichPresence.Builder()
             .setState("In multiplayer")
             .setDetails(Config.modpackName.get())
             .setStartTimestamp(System.currentTimeMillis())
-            .setLargeImage("overworld", "In the Overworld") //TODO change Dimension to current Player dim
+            .setLargeImage("overworld", "In the Overworld")
             .setSmallImage("multiplayer", "In multiplayer") //TODO show Server IP
-            .build()
     );
 
-    private RichPresence richPresence;
+    private final RichPresence.Builder richPresence;
 
-    RPPresets(RichPresence richPresence) {
+    RPPresets(RichPresence.Builder richPresence) {
         this.richPresence = richPresence;
     }
 
-    public RichPresence getRichPresence() {
+    public RichPresence.Builder getRichPresence() {
         return richPresence;
     }
 }

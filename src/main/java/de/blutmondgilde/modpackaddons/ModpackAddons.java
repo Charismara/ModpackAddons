@@ -2,6 +2,7 @@ package de.blutmondgilde.modpackaddons;
 
 import de.blutmondgilde.modpackaddons.config.Config;
 import de.blutmondgilde.modpackaddons.discord.Discord;
+import de.blutmondgilde.modpackaddons.network.MANetworkHandler;
 import de.blutmondgilde.modpackaddons.util.Constants;
 import de.blutmondgilde.modpackaddons.util.ImageUtils;
 import de.blutmondgilde.modpackaddons.util.LogHelper;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
@@ -25,11 +27,20 @@ import java.util.Map;
 
 @Mod(Constants.MOD_ID)
 public class ModpackAddons {
+    public static Discord discord;
+    public static boolean updateRichPresence = false;
+    public static boolean isMultiplayer = false;
 
     public ModpackAddons() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         Config.load(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(Constants.MOD_ID + "-client.toml"));
+
+    }
+
+    private void setup(final FMLCommonSetupEvent event) {
+        MANetworkHandler.register();
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
@@ -47,7 +58,7 @@ public class ModpackAddons {
         }
 
         if (Config.isDiscordRichPresenceEnabled.get()) {
-            Discord discord = new Discord();
+            discord = new Discord();
         }
     }
 
