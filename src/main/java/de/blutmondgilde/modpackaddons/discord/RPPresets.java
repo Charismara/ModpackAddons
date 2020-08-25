@@ -8,8 +8,8 @@ public enum RPPresets {
             .setState("In the main menu")
             .setDetails(Config.modpackName.get())
             .setStartTimestamp(System.currentTimeMillis())
-            .setLargeImage("mainmenu", "In the main menu")
-            .setSmallImage("icon", "Minecraft Forge")
+            .setLargeImage("icon", "Minecraft Forge")
+            .setSmallImage("mainmenu", "In the main menu")
             .build()
     ),
     SinglePlayer(new RichPresence.Builder()
