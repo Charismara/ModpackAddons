@@ -23,7 +23,6 @@
  */
 package com.gitlab.cdagaming.craftpresence.utils.discord;
 
-import com.gitlab.cdagaming.craftpresence.CraftPresence;
 import com.gitlab.cdagaming.craftpresence.utils.StringUtils;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener;
@@ -40,6 +39,8 @@ import de.blutmondgilde.modpackaddons.util.LogHelper;
  * @author CDAGaming
  */
 public class ModIPCListener implements IPCListener {
+    public static DiscordUtils CLIENT = new DiscordUtils();
+
     @Override
     public void onActivityJoin(IPCClient client, String secret) {
     }
@@ -58,9 +59,9 @@ public class ModIPCListener implements IPCListener {
 
     @Override
     public void onDisconnect(IPCClient client, Throwable t) {
-        if (StringUtils.isNullOrEmpty(CraftPresence.CLIENT.STATUS) || (!StringUtils.isNullOrEmpty(CraftPresence.CLIENT.STATUS) && !CraftPresence.CLIENT.STATUS.equalsIgnoreCase("disconnected"))) {
-            CraftPresence.CLIENT.STATUS = "disconnected";
-            CraftPresence.CLIENT.shutDown();
+        if (StringUtils.isNullOrEmpty(CLIENT.STATUS) || (!StringUtils.isNullOrEmpty(CLIENT.STATUS) && !CLIENT.STATUS.equalsIgnoreCase("disconnected"))) {
+            CLIENT.STATUS = "disconnected";
+            CLIENT.shutDown();
         }
     }
 
@@ -74,7 +75,7 @@ public class ModIPCListener implements IPCListener {
 
     @Override
     public void onReady(IPCClient client) {
-        client.sendRichPresence(RPPresets.Mainmenu.getRichPresence());
+        client.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build());
         LogHelper.getLogger("IPC-Listener").debug("Discord Module is ready!");
     }
 }

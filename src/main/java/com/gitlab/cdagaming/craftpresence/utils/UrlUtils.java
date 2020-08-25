@@ -23,9 +23,10 @@
  */
 package com.gitlab.cdagaming.craftpresence.utils;
 
-import com.gitlab.cdagaming.craftpresence.ModUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import de.blutmondgilde.modpackaddons.util.Constants;
+import net.minecraft.util.SharedConstants;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,10 +40,11 @@ import java.nio.charset.Charset;
  * @author CDAGaming
  */
 public class UrlUtils {
+    public static final String MCVersion = SharedConstants.getVersion().getName();
     /**
      * The User Agent to Identify As when Accessing other URLs
      */
-    private static final String USER_AGENT = ModUtils.MODID + "/" + ModUtils.MCVersion;
+    private static final String USER_AGENT = Constants.MOD_ID + "/" + MCVersion;
 
     /**
      * The GSON Json Builder to Use while Parsing Json

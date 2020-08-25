@@ -25,41 +25,13 @@ package com.gitlab.cdagaming.craftpresence;
 
 import de.blutmondgilde.modpackaddons.util.LogHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.SharedConstants;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
 @SuppressWarnings("DuplicatedCode")
 public class ModUtils {
-    /**
-     * The Application's Identifier
-     */
-    public static final String MODID = "craftpresence";
-
-    /**
-     * The Detected Minecraft Version
-     */
-    public static final String MCVersion = SharedConstants.getVersion().getName();
-
-    /**
-     * The Application's "mods" Directory
-     */
-    public static final String modsDir = CraftPresence.SYSTEM.USER_DIR + File.separator + "mods";
-
     /**
      * The Detected Username within Minecraft
      */
     public static final String USERNAME = Minecraft.getInstance().getSession().getUsername();
 
     public static final Logger LOG = LogHelper.getLogger("DiscordModule");
-
-    /**
-     * The Current Thread's Class Loader, used to dynamically receive data as needed
-     */
-    public static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
-
-    /**
-     * If this Application should be run in a Developer or Debug State
-     */
-    public static boolean IS_DEV = false;
 }
