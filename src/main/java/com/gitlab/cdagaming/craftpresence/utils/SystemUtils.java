@@ -33,10 +33,6 @@ import java.util.List;
  * @author CDAGaming
  */
 public class SystemUtils {
-    /**
-     * The Current Time Remaining on the Timer
-     */
-    public int TIMER = 0;
 
     /**
      * The Name of the User's Operating System
@@ -74,36 +70,9 @@ public class SystemUtils {
     public boolean IS_64_BIT = false;
 
     /**
-     * If Loading has been completed, classified as after callbacks resync once
-     */
-    public boolean HAS_LOADED = false;
-
-    /**
      * The Current Epoch Unix Timestamp in Milliseconds
      */
     public long CURRENT_TIMESTAMP;
-
-    /**
-     * Whether the Timer is Currently Active
-     */
-    private boolean isTiming = false;
-
-    /**
-     * Whether the Callbacks related to the Mod have been refreshed
-     * <p>
-     * In this case, the RPC Updates every 2 Seconds with this check ensuring such
-     */
-    private boolean refreshedCallbacks = false;
-
-    /**
-     * The Beginning Unix Timestamp to count down from
-     */
-    private long BEGINNING_TIMESTAMP;
-
-    /**
-     * The Elapsed Time since the application started (In Seconds)
-     */
-    private long ELAPSED_TIME;
 
     /**
      * Initialize OS and Timer Information
@@ -118,33 +87,12 @@ public class SystemUtils {
             IS_MAC = OS_NAME.startsWith("Mac");
             IS_WINDOWS = OS_NAME.startsWith("Windows");
             CURRENT_TIMESTAMP = System.currentTimeMillis();
-            ELAPSED_TIME = 0;
 
             // Calculate if 64-Bit Architecture
             final List<String> x64 = Lists.newArrayList("amd64", "x86_64");
             IS_64_BIT = x64.contains(OS_ARCH);
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
-    }
-
-    /**
-     * Begins the Timer, counting down from {@link SystemUtils#BEGINNING_TIMESTAMP}
-     */
-    private void startTimer() {
-        BEGINNING_TIMESTAMP = System.currentTimeMillis() + (TIMER * 1000L);
-        isTiming = true;
-    }
-
-    /**
-     * Determines the Remaining Time until 0, and Stops the Timer @ 0 remaining
-     */
-    private void checkTimer() {
-        if (TIMER > 0) {
-            long remainingTime = (BEGINNING_TIMESTAMP - System.currentTimeMillis()) / 1000L;
-            TIMER = (int) remainingTime;
-        } else if (isTiming) {
-            isTiming = false;
         }
     }
 }

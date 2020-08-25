@@ -55,12 +55,11 @@ import java.util.HashMap;
  */
 public final class IPCClient implements Closeable {
     private final long clientId;
-    private final boolean debugMode;
     private final HashMap<String, Callback> callbacks = new HashMap<>();
     private volatile Pipe pipe;
     private IPCListener listener = null;
     private Thread readThread = null;
-    private String encoding = "UTF-8";
+    private final String encoding = "UTF-8";
 
     /**
      * Constructs a new IPCClient using the provided {@code clientId}.<br>
@@ -71,20 +70,6 @@ public final class IPCClient implements Closeable {
      */
     public IPCClient(long clientId) {
         this.clientId = clientId;
-        this.debugMode = false;
-    }
-
-    /**
-     * Constructs a new IPCClient using the provided {@code clientId}.<br>
-     * This is initially unconnected to Discord.
-     *
-     * @param clientId  The Rich Presence application's client ID, which can be found
-     *                  <a href=https://discord.com/developers/applications/me>here</a>
-     * @param debugMode Whether Debug Logging should be shown for this client
-     */
-    public IPCClient(long clientId, boolean debugMode) {
-        this.clientId = clientId;
-        this.debugMode = debugMode;
     }
 
     /**
@@ -123,39 +108,6 @@ public final class IPCClient implements Closeable {
      */
     public String getEncoding() {
         return this.encoding;
-    }
-
-    /**
-     * Sets the encoding to send packets in.
-     * <p>
-     * This can be set safely before a call to {@link #connect(DiscordBuild...)}
-     * is made.
-     * <p>
-     * Default: UTF-8
-     *
-     * @param encoding for this IPCClient.
-     */
-    public void setEncoding(final String encoding) {
-        this.encoding = encoding;
-    }
-
-    /**
-     * Gets the client ID associated with this IPCClient
-     *
-     * @return the client id
-     */
-    public long getClientID() {
-        return this.clientId;
-    }
-
-    /**
-     * Gets whether this IPCClient is in Debug Mode
-     * Default: False
-     *
-     * @return The Debug Mode Status
-     */
-    public boolean isDebugMode() {
-        return debugMode;
     }
 
     /**
@@ -342,22 +294,6 @@ public final class IPCClient implements Closeable {
         if (pipe == null) return null;
 
         return pipe.getDiscordBuild();
-    }
-
-    /**
-     * Gets the IPCClient's current {@link User} attached to the target {@link DiscordBuild}.
-     * <p>
-     * This is always the User Data attached to the DiscordBuild found when
-     * making a call to {@link #connect(DiscordBuild...)}
-     * <p>
-     * Note that this value should NOT return null under any circumstances.
-     *
-     * @return The current {@link User} of this IPCClient from the target {@link DiscordBuild}, or null if not found.
-     */
-    public User getCurrentUser() {
-        if (pipe == null) return null;
-
-        return pipe.getCurrentUser();
     }
 
 

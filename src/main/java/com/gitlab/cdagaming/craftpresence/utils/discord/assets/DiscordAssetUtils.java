@@ -24,15 +24,9 @@
 package com.gitlab.cdagaming.craftpresence.utils.discord.assets;
 
 import com.gitlab.cdagaming.craftpresence.utils.StringUtils;
-import com.gitlab.cdagaming.craftpresence.utils.UrlUtils;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import de.blutmondgilde.modpackaddons.util.Constants;
-import de.blutmondgilde.modpackaddons.util.LogHelper;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Utilities related to locating and Parsing available Discord Assets
@@ -41,34 +35,6 @@ import java.util.Random;
  * @author CDAGaming
  */
 public class DiscordAssetUtils {
-    /**
-     * A List of the Icon IDs available as ImageType SMALL
-     */
-    private static final List<String> SMALL_IDS = Lists.newArrayList();
-    /**
-     * A List of the Icon IDs available as ImageType LARGE
-     */
-    private static final List<String> LARGE_IDS = Lists.newArrayList();
-    /**
-     * A List of all the Icon IDs available within the Current Client ID
-     */
-    private static final List<String> ICON_IDS = Lists.newArrayList();
-    /**
-     * If the Asset Check had completed
-     */
-    public static boolean syncCompleted = false;
-    /**
-     * A List of the Icons available as ImageType SMALL
-     */
-    public static List<String> SMALL_ICONS = Lists.newArrayList();
-    /**
-     * A List of the Icons available as ImageType LARGE
-     */
-    public static List<String> LARGE_ICONS = Lists.newArrayList();
-    /**
-     * A List of all the Icons available within the Current Client ID
-     */
-    public static List<String> ICON_LIST = Lists.newArrayList();
     /**
      * Mapping storing the Icon Keys and Asset Data attached to the Current Client ID
      */
@@ -83,134 +49,5 @@ public class DiscordAssetUtils {
     public static boolean contains(final String key) {
         final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : StringUtils.formatPackIcon(key.replace(" ", "_"));
         return ASSET_LIST.containsKey(formattedKey);
-    }
-
-    /**
-     * Retrieves the Specified {@link DiscordAsset} data from an Icon Key, if present
-     *
-     * @param key The Specified Icon Key to gain info for
-     * @return The {@link DiscordAsset} data for this Icon Key
-     */
-    public static DiscordAsset get(final String key) {
-        final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : StringUtils.formatPackIcon(key.replace(" ", "_"));
-        return contains(formattedKey) ? ASSET_LIST.get(formattedKey) : null;
-    }
-
-    /**
-     * Retrieves the Parsed Icon Key from the specified key, if present
-     *
-     * @param key The Specified Key to gain info for
-     * @return The Parsed Icon Key from the {@link DiscordAsset} data
-     */
-    public static String getKey(final String key) {
-        final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : StringUtils.formatPackIcon(key.replace(" ", "_"));
-        return contains(formattedKey) ? ASSET_LIST.get(formattedKey).getName() : "";
-    }
-
-    /**
-     * Retrieves the Parsed Icon ID from the specified key, if present
-     *
-     * @param key The Specified Key to gain info for
-     * @return The Parsed Icon ID from the {@link DiscordAsset} data
-     */
-    public static String getID(final String key) {
-        final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : StringUtils.formatPackIcon(key.replace(" ", "_"));
-        return contains(formattedKey) ? ASSET_LIST.get(formattedKey).getId() : "";
-    }
-
-    /**
-     * Retrieves the Parsed Image Type from the specified key, if present
-     *
-     * @param key The Specified Key to gain info for
-     * @return The Parsed Image Type from the {@link DiscordAsset} data
-     */
-    public static DiscordAsset.AssetType getType(final String key) {
-        final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : key.replace(" ", "_").toLowerCase();
-        return contains(formattedKey) ? ASSET_LIST.get(formattedKey).getType() : DiscordAsset.AssetType.LARGE;
-    }
-
-    /**
-     * Clears FULL Data from this Module
-     */
-    public static void emptyData() {
-        ASSET_LIST.clear();
-        SMALL_ICONS.clear();
-        SMALL_IDS.clear();
-        LARGE_ICONS.clear();
-        LARGE_IDS.clear();
-        ICON_LIST.clear();
-        ICON_IDS.clear();
-
-        clearClientData();
-    }
-
-    /**
-     * Clears Runtime Client Data from this Module (PARTIAL Clear)
-     */
-    public static void clearClientData() {
-        syncCompleted = false;
-    }
-
-    /**
-     * Attempts to retrieve a Random Icon Key from the available assets
-     *
-     * @return A Randomly retrieved Icon Key, if found
-     */
-    public static String getRandomAsset() {
-        try {
-            final Random randomObj = new Random();
-            return ICON_LIST.get(randomObj.nextInt(ICON_LIST.size()));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "";
-        }
-    }
-
-    /**
-     * Retrieves and Synchronizes the List of Available Discord Assets from the Client ID
-     */
-    public static void loadAssets() {
-        ASSET_LIST = Maps.newHashMap();
-
-        try {
-            final String url = "https://discord.com/api/oauth2/applications/" + Constants.DISCORD_CLIENT_ID + "/assets";
-            final DiscordAsset[] assets = UrlUtils.getJSONFromURL(url, DiscordAsset[].class);
-
-            if (assets != null) {
-                for (DiscordAsset asset : assets) {
-                    if (asset.getType().equals(DiscordAsset.AssetType.LARGE)) {
-                        if (!LARGE_ICONS.contains(asset.getName())) {
-                            LARGE_ICONS.add(asset.getName());
-                        }
-                        if (!LARGE_IDS.contains(asset.getId())) {
-                            LARGE_IDS.add(asset.getId());
-                        }
-                    }
-                    if (asset.getType().equals(DiscordAsset.AssetType.SMALL)) {
-                        if (!SMALL_ICONS.contains(asset.getName())) {
-                            SMALL_ICONS.add(asset.getName());
-                        }
-                        if (!SMALL_IDS.contains(asset.getId())) {
-                            SMALL_IDS.add(asset.getId());
-                        }
-                    }
-                    if (!ICON_LIST.contains(asset.getName())) {
-                        ICON_LIST.add(asset.getName());
-                    }
-                    if (!ASSET_LIST.containsKey(asset.getName())) {
-                        ASSET_LIST.put(asset.getName(), asset);
-                    }
-                    if (!ICON_IDS.contains(asset.getId())) {
-                        ICON_IDS.add(asset.getId());
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            LogHelper.getLogger("Discord/Assets").fatal("Exception while loading Assets");
-            ex.printStackTrace();
-        } finally {
-            syncCompleted = true;
-            LogHelper.getLogger("Discord/Assets").debug("Assets Synchronized");
-        }
     }
 }
