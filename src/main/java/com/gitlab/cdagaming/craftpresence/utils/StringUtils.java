@@ -800,24 +800,6 @@ public class StringUtils {
     }
 
     /**
-     * Returns the combined rendering width of the String entry
-     *
-     * @param stringEntry The original String to evaluate
-     * @return The expected rendering width for the input
-     */
-    public static int getStringWidth(String stringEntry) {
-        if (isNullOrEmpty(stringEntry)) {
-            return 0;
-        } else {
-            int strLength = 0;
-            for (char strChar : stringEntry.toCharArray()) {
-                strLength += getCharWidth(strChar, ModUtils.TRANSLATOR.isUnicode);
-            }
-            return strLength;
-        }
-    }
-
-    /**
      * Returns the Render Character/Glyph Width of the specified character
      *
      * @param characterInput The character to evaluate
@@ -880,7 +862,7 @@ public class StringUtils {
                 flag = stringOfCharacter.equalsIgnoreCase("l") && !(stringOfCharacter.equalsIgnoreCase("r") || STRIP_COLOR_PATTERN.matcher(stringOfCharacter).find());
             }
 
-            charWidth += getCharWidth(currentCharacter, ModUtils.TRANSLATOR.isUnicode);
+            charWidth += getCharWidth(currentCharacter, false);
             if (flag) {
                 ++charWidth;
             }

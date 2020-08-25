@@ -17,6 +17,7 @@ public class Config {
     /* ============== Categories ============== */
     public static final String CATEGORY_DISPLAY = "Display";
     public static final String CATEGORY_SERVER = "Server";
+    public static final String CATEGORY_DISCORD = "Discord";
     /* ============ Forge Elements ============ */
     private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec CLIENT_CONFIG;
@@ -29,6 +30,9 @@ public class Config {
     public static ForgeConfigSpec.ConfigValue<String> windowTitle;
     public static ForgeConfigSpec.BooleanValue isIconChangerEnabled;
     public static ForgeConfigSpec.ConfigValue<String> pathOrUrl;
+    /* =========== Discord Category ========== */
+    public static ForgeConfigSpec.BooleanValue isDiscordRichPresenceEnabled;
+    public static ForgeConfigSpec.ConfigValue<String> modpackName;
 
     static {
         CLIENT_BUILDER.comment("Display").push(CATEGORY_DISPLAY);
@@ -46,7 +50,6 @@ public class Config {
                 .define("url", "https://icons.iconarchive.com/icons/papirus-team/papirus-apps/32/minecraft-icon.png");
         CLIENT_BUILDER.pop();
 
-
         CLIENT_BUILDER.comment("ServerList Management").push(CATEGORY_SERVER);
         isServerManagementEnabled = CLIENT_BUILDER
                 .comment("Set to true to enable the ServerList Management Feature")
@@ -57,6 +60,15 @@ public class Config {
         serverAddressArray = CLIENT_BUILDER
                 .comment("The Address / IP of the Servers to add. Multiple values has to be separated by ;.", "Example: Server1.com;Server2.com")
                 .define("ServerAddresses", "127.0.0.1:25565");
+        CLIENT_BUILDER.pop();
+
+        CLIENT_BUILDER.comment("Discord").push(CATEGORY_DISCORD);
+        isDiscordRichPresenceEnabled = CLIENT_BUILDER
+                .comment("Enables Discord Support")
+                .define("enableDiscord", false);
+        modpackName = CLIENT_BUILDER
+                .comment("Name of your Modpack")
+                .define("discordDetails", "Minecraft Forge");
         CLIENT_BUILDER.pop();
 
         //Build Config

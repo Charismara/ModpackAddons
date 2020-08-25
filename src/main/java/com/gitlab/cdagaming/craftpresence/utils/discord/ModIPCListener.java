@@ -30,6 +30,8 @@ import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
 import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.User;
 import com.google.gson.JsonObject;
+import de.blutmondgilde.modpackaddons.discord.RPPresets;
+import de.blutmondgilde.modpackaddons.util.LogHelper;
 
 /**
  * Listener to Interpret Discord IPC Events, on received
@@ -72,9 +74,7 @@ public class ModIPCListener implements IPCListener {
 
     @Override
     public void onReady(IPCClient client) {
-        if (StringUtils.isNullOrEmpty(CraftPresence.CLIENT.STATUS) || (!StringUtils.isNullOrEmpty(CraftPresence.CLIENT.STATUS) && !CraftPresence.CLIENT.STATUS.equalsIgnoreCase("ready"))) {
-            CraftPresence.CLIENT.STATUS = "ready";
-            CraftPresence.CLIENT.CURRENT_USER = client.getCurrentUser();
-        }
+        client.sendRichPresence(RPPresets.Mainmenu.getRichPresence());
+        LogHelper.getLogger("IPC-Listener").debug("Discord Module is ready!");
     }
 }

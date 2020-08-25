@@ -1,6 +1,7 @@
 package de.blutmondgilde.modpackaddons;
 
 import de.blutmondgilde.modpackaddons.config.Config;
+import de.blutmondgilde.modpackaddons.discord.Discord;
 import de.blutmondgilde.modpackaddons.util.Constants;
 import de.blutmondgilde.modpackaddons.util.ImageUtils;
 import de.blutmondgilde.modpackaddons.util.LogHelper;
@@ -43,6 +44,10 @@ public class ModpackAddons {
 
         if (Config.isServerManagementEnabled.get()) {
             setupServerList();
+        }
+
+        if (Config.isDiscordRichPresenceEnabled.get()) {
+            Discord discord = new Discord();
         }
     }
 

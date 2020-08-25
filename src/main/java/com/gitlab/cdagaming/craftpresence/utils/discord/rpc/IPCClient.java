@@ -175,7 +175,7 @@ public final class IPCClient implements Closeable {
 
         pipe = Pipe.openPipe(this, clientId, callbacks, preferredOrder);
 
-        LogHelper.getLogger("IPCClient").debug("Client is now connected and ready!");
+        LogHelper.getLogger("Discord/IPC").debug("Client is now connected and ready!");
 
         if (listener != null)
             listener.onReady(this);
