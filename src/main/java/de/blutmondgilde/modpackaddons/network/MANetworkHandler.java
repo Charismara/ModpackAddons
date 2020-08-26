@@ -1,6 +1,7 @@
 package de.blutmondgilde.modpackaddons.network;
 
 import de.blutmondgilde.modpackaddons.ModpackAddons;
+import de.blutmondgilde.modpackaddons.config.Config;
 import de.blutmondgilde.modpackaddons.discord.RPPresets;
 import de.blutmondgilde.modpackaddons.util.Constants;
 import de.blutmondgilde.modpackaddons.util.LogHelper;
@@ -51,17 +52,20 @@ public class MANetworkHandler {
 
     @SubscribeEvent
     public static void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent e) {
+        if (!Config.isDiscordRichPresenceEnabled.get()) return;
         sendToPlayer(new JoinedWorldPacket(e.getPlayer()), e.getPlayer());
     }
 
     @SubscribeEvent
     public static void onPlayerChangeDimension(final PlayerEvent.PlayerChangedDimensionEvent e) {
+        if (!Config.isDiscordRichPresenceEnabled.get()) return;
         sendToPlayer(new JoinedWorldPacket(e.getPlayer()), e.getPlayer());
     }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onPlayerLeave(final ClientPlayerNetworkEvent.LoggedOutEvent e) {
+        if (!Config.isDiscordRichPresenceEnabled.get()) return;
         ModpackAddons.discord.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build());
         LogHelper.getLogger("NetworkHandler").debug("Send a DiscordDataPack. (Leave)");
     }
