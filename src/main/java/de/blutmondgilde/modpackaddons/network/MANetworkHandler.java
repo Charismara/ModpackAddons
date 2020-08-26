@@ -1,14 +1,12 @@
 package de.blutmondgilde.modpackaddons.network;
 
 import de.blutmondgilde.modpackaddons.ModpackAddons;
-import de.blutmondgilde.modpackaddons.discord.Discord;
 import de.blutmondgilde.modpackaddons.discord.RPPresets;
 import de.blutmondgilde.modpackaddons.util.Constants;
 import de.blutmondgilde.modpackaddons.util.LogHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
@@ -53,30 +51,17 @@ public class MANetworkHandler {
 
     @SubscribeEvent
     public static void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent e) {
-        final PlayerEntity player = e.getPlayer();
-        final World world = player.getEntityWorld();
-        final Discord.Dimensions dim;
-        switch (world.func_230315_m_().field_242709_C.getPath()) {
-            case "the_nether":
-                dim = Discord.Dimensions.Nether;
-                break;
-            case "the_end":
-                dim = Discord.Dimensions.End;
-                break;
-            default:
-                dim = Discord.Dimensions.Overworld;
-                break;
-        }
-
-        sendToPlayer(new JoinedWorldPacket(dim, world.isRemote), player);
-        LogHelper.getLogger("NetworkHandler").debug("Send a DiscordDataPack. (Join)");
+        sendToPlayer(new JoinedWorldPacket(e.getPlayer()), e.getPlayer());
     }
 
+    @SubscribeEvent
+    public static void onPlayerChangeDimension(final PlayerEvent.PlayerChangedDimensionEvent e) {
+        sendToPlayer(new JoinedWorldPacket(e.getPlayer()), e.getPlayer());
+    }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onPlayerLeave(final ClientPlayerNetworkEvent.LoggedOutEvent e) {
-        //sendToPlayer(new LeftWorldPacket(), e.getPlayer());
         ModpackAddons.discord.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build());
         LogHelper.getLogger("NetworkHandler").debug("Send a DiscordDataPack. (Leave)");
     }
