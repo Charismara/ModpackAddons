@@ -89,6 +89,7 @@ public class Config {
     @SubscribeEvent
     public static void onReload(ModConfig.Reloading e) {
         if (!e.getConfig().getFileName().equals("modpackaddons-client.toml")) return;
+        if (!Config.isTitleChangerEnabled.get()) return;
         final Logger logger = LogHelper.getLogger("ConfigReloader");
         ModpackAddons.changeWindowTitle();
     }
