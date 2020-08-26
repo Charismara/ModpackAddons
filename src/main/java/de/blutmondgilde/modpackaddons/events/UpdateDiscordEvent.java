@@ -13,7 +13,7 @@ public class UpdateDiscordEvent extends Event {
                 ModpackAddons.discord.sendRichPresence(
                         RPPresets.MultiPlayer.getRichPresence()
                                 .setLargeImage(data[0], data[1])
-                                .setState(Minecraft.getInstance().getCurrentServerData().serverIP)
+                                .setState("On " + Minecraft.getInstance().getCurrentServerData().serverIP)
                                 .build()
                 );
             } catch (Exception ignored) {
