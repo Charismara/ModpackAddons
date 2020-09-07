@@ -18,10 +18,9 @@ public class LeftWorldPacket {
     public static class Handler {
         public static void handle(final LeftWorldPacket msg, Supplier<NetworkEvent.Context> context) {
             context.get().enqueueWork(
-                    () -> {
-                        ModpackAddons.discord.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build());
-                    }
-            );
+                    () -> ModpackAddons.discord.ifPresent(
+                            (d) -> d.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build())
+                    ));
             context.get().setPacketHandled(true);
         }
     }

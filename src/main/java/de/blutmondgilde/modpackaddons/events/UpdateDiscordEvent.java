@@ -8,27 +8,31 @@ import net.minecraftforge.eventbus.api.Event;
 public class UpdateDiscordEvent extends Event {
     public UpdateDiscordEvent(final boolean isServer) {
         final String[] data = getDimName();
+
         if (isServer) {
+
             try {
-                ModpackAddons.discord.sendRichPresence(
-                        RPPresets.MultiPlayer.getRichPresence()
-                                .setLargeImage(data[0], data[1])
-                                .setState("On " + Minecraft.getInstance().getCurrentServerData().serverIP)
-                                .build()
+                ModpackAddons.discord.ifPresent(
+                        (d) -> d.sendRichPresence(
+                                RPPresets.MultiPlayer.getRichPresence()
+                                        .setLargeImage(data[0], data[1])
+                                        .setState("On " + Minecraft.getInstance().getCurrentServerData().serverIP)
+                                        .build()
+                        )
                 );
             } catch (Exception ignored) {
-                ModpackAddons.discord.sendRichPresence(
+                ModpackAddons.discord.ifPresent((d) -> d.sendRichPresence(
                         RPPresets.SinglePlayer.getRichPresence()
                                 .setLargeImage(data[0], data[1])
                                 .build()
-                );
+                ));
             }
         } else {
-            ModpackAddons.discord.sendRichPresence(
+            ModpackAddons.discord.ifPresent((d) -> d.sendRichPresence(
                     RPPresets.SinglePlayer.getRichPresence()
                             .setLargeImage(data[0], data[1])
                             .build()
-            );
+            ));
         }
     }
 
