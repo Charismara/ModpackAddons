@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.exceptions;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.exceptions;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.DiscordBuild;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.DiscordBuild;
 
 /**
- * An exception thrown when the {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient IPCClient}
+ * An exception thrown when the {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient IPCClient}
  * cannot find the proper application to use for RichPresence when
- * attempting to {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient#connect(DiscordBuild...) connect}.
+ * attempting to {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient#connect(DiscordBuild...) connect}.
  * <p>
  * This purely and always means the IPCClient in question (specifically the client ID)
  * is <i>invalid</i> and features using this library cannot be accessed using the instance.

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,8 +22,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 /**
- * A data-packet received from Discord via an {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient IPCClient}.<br>
- * These can be handled via an implementation of {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener IPCListener}.
+ * A data-packet received from Discord via an {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient IPCClient}.<br>
+ * These can be handled via an implementation of {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCListener IPCListener}.
  *
  * @author John Grosh (john.a.grosh@gmail.com)
  */
@@ -115,18 +115,10 @@ public class Packet {
         return "Pkt:" + getOp() + getParsedJson().toString();
     }
 
-    public String toDecodedString() {
-        try {
-            return "Pkt:" + getOp() + new String(getParsedJson().toString().getBytes(encoding));
-        } catch (UnsupportedEncodingException e) {
-            return "Pkt:" + getOp() + getParsedJson().toString();
-        }
-    }
-
     /**
      * Discord response OpCode values that are
      * sent with response data to and from Discord
-     * and the {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient IPCClient}
+     * and the {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient IPCClient}
      * connected.
      */
     public enum OpCode {

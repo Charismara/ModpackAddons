@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.impl;
+package de.blutmondgilde.modpackaddons.discord.impl;
 
 /**
  * A Set of Two Objects contained within a Mapping
@@ -40,23 +40,6 @@ public class Tuple<U, V> {
      * The second element of this {@link Tuple}
      */
     private V second;
-
-    /**
-     * Constructs a new {@link Tuple} with the given values.
-     *
-     * @param first  the first element
-     * @param second the second element
-     */
-    public Tuple(U first, V second) {
-        put(first, second);
-    }
-
-    /**
-     * Constructs a new empty {@link Tuple}.
-     */
-    public Tuple() {
-        // N/A
-    }
 
     /**
      * Retrieves the first element of this {@link Tuple}.

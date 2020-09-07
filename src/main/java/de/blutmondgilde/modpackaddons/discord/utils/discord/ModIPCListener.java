@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord;
+package de.blutmondgilde.modpackaddons.discord.utils.discord;
 
-import com.gitlab.cdagaming.craftpresence.utils.StringUtils;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.User;
+import de.blutmondgilde.modpackaddons.discord.utils.StringUtils;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCListener;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Packet;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.User;
 import com.google.gson.JsonObject;
 import de.blutmondgilde.modpackaddons.discord.RPPresets;
 import de.blutmondgilde.modpackaddons.util.LogHelper;

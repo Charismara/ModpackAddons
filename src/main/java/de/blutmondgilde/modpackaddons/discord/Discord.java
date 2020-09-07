@@ -1,8 +1,8 @@
 package de.blutmondgilde.modpackaddons.discord;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.ModIPCListener;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.RichPresence;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.ModIPCListener;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.RichPresence;
 import de.blutmondgilde.modpackaddons.util.Constants;
 import de.blutmondgilde.modpackaddons.util.LogHelper;
 import org.apache.logging.log4j.Logger;

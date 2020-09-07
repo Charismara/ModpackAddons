@@ -1,6 +1,6 @@
 package de.blutmondgilde.modpackaddons.discord;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.RichPresence;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.RichPresence;
 import de.blutmondgilde.modpackaddons.config.Config;
 
 public enum RPPresets {

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.utils;
+package de.blutmondgilde.modpackaddons.discord.utils;
 
 import com.google.common.collect.Lists;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -300,59 +300,7 @@ public class RichPresence {
         }
 
         /**
-         * Sets party configurations for a team, lobby, or other form of group.
-         *
-         * <p>The {@code partyId} is ID of the player's party.
-         * <br>The {@code partySize} is the current size of the player's party.
-         * <br>The {@code partyMax} is the maximum number of player's allowed in the party.
-         *
-         * @param partyId   The ID of the player's party.
-         * @param partySize The current size of the player's party.
-         * @param partyMax  The maximum number of player's allowed in the party.
-         * @return This Builder.
-         */
-        public Builder setParty(String partyId, int partySize, int partyMax) {
-            this.partyId = partyId;
-            this.partySize = partySize;
-            this.partyMax = partyMax;
-            return this;
-        }
-
-        /**
-         * Sets the unique hashed string for Spectate and Join.
-         *
-         * @param matchSecret The unique hashed string for Spectate and Join.
-         * @return This Builder.
-         */
-        public Builder setMatchSecret(String matchSecret) {
-            this.matchSecret = matchSecret;
-            return this;
-        }
-
-        /**
-         * Sets the unique hashed string for chat invitations and Ask to Join.
-         *
-         * @param joinSecret The unique hashed string for chat invitations and Ask to Join.
-         * @return This Builder.
-         */
-        public Builder setJoinSecret(String joinSecret) {
-            this.joinSecret = joinSecret;
-            return this;
-        }
-
-        /**
-         * Sets the unique hashed string for Spectate button.
-         *
-         * @param spectateSecret The unique hashed string for Spectate button.
-         * @return This Builder.
-         */
-        public Builder setSpectateSecret(String spectateSecret) {
-            this.spectateSecret = spectateSecret;
-            return this;
-        }
-
-        /**
-         * Marks the {@link #setMatchSecret(String) matchSecret} as a game
+         * Marks the as a game
          * session with a specific beginning and end.
          *
          * @param instance Whether or not the {@code matchSecret} is a game

@@ -21,17 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence;
+package de.blutmondgilde.modpackaddons.util;
 
-import de.blutmondgilde.modpackaddons.util.LogHelper;
-import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
 @SuppressWarnings("DuplicatedCode")
 public class ModUtils {
-    /**
-     * The Detected Username within Minecraft
-     */
-    public static final String USERNAME = Minecraft.getInstance().getSession().getUsername();
-
     public static final Logger LOG = LogHelper.getLogger("DiscordModule");
 }
