@@ -14,37 +14,39 @@
  * limitations under the License.
  */
 
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.pipe;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Callback;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Callback;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Packet;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import org.newsclub.net.unix.AFUNIXSocket;
-import org.newsclub.net.unix.AFUNIXSocketAddress;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
+import java.io.RandomAccessFile;
 import java.util.HashMap;
 
-public class UnixPipe extends Pipe {
-    private final AFUNIXSocket socket;
+public class WindowsPipe extends Pipe {
+    public RandomAccessFile file;
 
-    UnixPipe(IPCClient ipcClient, HashMap<String, Callback> callbacks, String location) throws IOException {
+    WindowsPipe(IPCClient ipcClient, HashMap<String, Callback> callbacks, String location) {
         super(ipcClient, callbacks);
+        try {
+            this.file = new RandomAccessFile(location, "rw");
+        } catch (FileNotFoundException e) {
+            this.file = null;
+        }
+    }
 
-        socket = AFUNIXSocket.newInstance();
-        socket.connect(new AFUNIXSocketAddress(new File(location)));
+    @Override
+    public void write(byte[] b) throws IOException {
+        file.write(b);
     }
 
     @Override
     public Packet read() throws IOException, JsonParseException {
-        InputStream is = socket.getInputStream();
-
-        while ((status == PipeStatus.CONNECTED || status == PipeStatus.CLOSING) && is.available() == 0) {
+        while ((status == PipeStatus.CONNECTED || status == PipeStatus.CLOSING) && file.length() == 0) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ignored) {
@@ -57,17 +59,11 @@ public class UnixPipe extends Pipe {
         if (status == PipeStatus.CLOSED)
             return new Packet(Packet.OpCode.CLOSE, null, ipcClient.getEncoding());
 
-        // Read the op and length. Both are signed ints
-        byte[] d = new byte[8];
-        int readResult = is.read(d);
-        ByteBuffer bb = ByteBuffer.wrap(d);
+        Packet.OpCode op = Packet.OpCode.values()[Integer.reverseBytes(file.readInt())];
+        int len = Integer.reverseBytes(file.readInt());
+        byte[] d = new byte[len];
 
-
-        Packet.OpCode op = Packet.OpCode.values()[Integer.reverseBytes(bb.getInt())];
-        d = new byte[Integer.reverseBytes(bb.getInt())];
-
-        int reversedResult = is.read(d);
-
+        file.readFully(d);
 
         JsonObject packetData = new JsonObject();
         packetData.addProperty("", new String(d));
@@ -79,15 +75,11 @@ public class UnixPipe extends Pipe {
     }
 
     @Override
-    public void write(byte[] b) throws IOException {
-        socket.getOutputStream().write(b);
-    }
-
-    @Override
     public void close() throws IOException {
         status = PipeStatus.CLOSING;
         send(Packet.OpCode.CLOSE, new JsonObject(), null);
         status = PipeStatus.CLOSED;
-        socket.close();
+        file.close();
     }
+
 }

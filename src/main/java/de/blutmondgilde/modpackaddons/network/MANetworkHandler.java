@@ -66,7 +66,9 @@ public class MANetworkHandler {
     @SubscribeEvent
     public static void onPlayerLeave(final ClientPlayerNetworkEvent.LoggedOutEvent e) {
         if (!Config.isDiscordRichPresenceEnabled.get()) return;
-        ModpackAddons.discord.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build());
+        ModpackAddons.discord.ifPresent(
+                (d) -> d.sendRichPresence(RPPresets.Mainmenu.getRichPresence().build())
+        );
         LogHelper.getLogger("NetworkHandler").debug("Send a DiscordDataPack. (Leave)");
     }
 }

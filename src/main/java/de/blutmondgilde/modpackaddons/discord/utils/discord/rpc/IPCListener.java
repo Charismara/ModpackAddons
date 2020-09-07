@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.User;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Packet;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.User;
 import com.google.gson.JsonObject;
 
 /**

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.pipe;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.DiscordBuild;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCListener;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.DiscordBuild;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Packet;
 
 /**
  * Constants representing various status that an {@link IPCClient} can have.

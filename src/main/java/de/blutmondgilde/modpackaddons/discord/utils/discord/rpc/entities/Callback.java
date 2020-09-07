@@ -13,39 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities;
 
-import com.gitlab.cdagaming.craftpresence.impl.DataConsumer;
+import de.blutmondgilde.modpackaddons.discord.impl.DataConsumer;
 
 /**
  * A callback for asynchronous logic when dealing processes that
  * would normally block the calling thread.
  * <p>
- * This is most visibly implemented in {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient IPCClient}.
+ * This is most visibly implemented in {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient IPCClient}.
  *
  * @author John Grosh (john.a.grosh@gmail.com)
  */
 public class Callback {
     private final DataConsumer<Packet> success;
     private final DataConsumer<String> failure;
-
-    /**
-     * Constructs an empty Callback.
-     */
-    public Callback() {
-        this(null, null);
-    }
-
-    /**
-     * Constructs a Callback with a success {@link DataConsumer} that
-     * occurs when the process it is attached to executes without
-     * error.
-     *
-     * @param success The Consumer to launch after a successful process.
-     */
-    public Callback(DataConsumer<Packet> success) {
-        this(success, null);
-    }
 
     /**
      * Constructs a Callback with a success {@link DataConsumer} <i>and</i>
@@ -65,7 +47,7 @@ public class Callback {
      * defined as not having a specified success {@link DataConsumer} and/or a
      * failure {@link DataConsumer}.<br>
      * This is only true if the Callback is constructed with the parameter-less
-     * constructor ({@link #Callback()}) or another constructor that leaves
+     * constructor or another constructor that leaves
      * one or both parameters {@code null}.
      *
      * @return {@code true} if and only if the Callback is "empty"

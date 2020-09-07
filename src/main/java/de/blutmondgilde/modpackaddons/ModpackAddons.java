@@ -25,10 +25,11 @@ import org.lwjgl.glfw.GLFW;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Mod(Constants.MOD_ID)
 public class ModpackAddons {
-    public static Discord discord;
+    public static Optional<Discord> discord;
     public static boolean isMultiplayer = false;
 
     public ModpackAddons() {
@@ -60,7 +61,7 @@ public class ModpackAddons {
 
         if (Config.isDiscordRichPresenceEnabled.get()) {
             isMultiplayer = false;
-            discord = new Discord();
+            discord = Optional.of(new Discord());
         }
     }
 

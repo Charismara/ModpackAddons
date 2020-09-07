@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc;
 
-import com.gitlab.cdagaming.craftpresence.ModUtils;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.*;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet.OpCode;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe.Pipe;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe.PipeStatus;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.exceptions.NoDiscordClientException;
+import de.blutmondgilde.modpackaddons.util.ModUtils;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.*;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Packet.OpCode;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.pipe.Pipe;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.pipe.PipeStatus;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.exceptions.NoDiscordClientException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import de.blutmondgilde.modpackaddons.util.LogHelper;

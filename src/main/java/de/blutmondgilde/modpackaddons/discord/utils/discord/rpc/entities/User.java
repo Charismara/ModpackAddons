@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities;
 
 /**
  * A encapsulation of a Discord User's data provided when a
- * {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener IPCListener} fires
- * {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener#onActivityJoinRequest(com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient, String, User)
+ * {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCListener IPCListener} fires
+ * {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCListener#onActivityJoinRequest(de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient, String, User)
  * onActivityJoinRequest}.
  *
  * @author John Grosh (john.a.grosh@gmail.com)
@@ -119,16 +119,6 @@ public class User {
     }
 
     /**
-     * Gets the Users avatar URL, or their {@link DefaultAvatar} avatar URL if they
-     * do not have a custom avatar set on their account.
-     *
-     * @return The Users effective avatar URL.
-     */
-    public String getEffectiveAvatarUrl() {
-        return getAvatarUrl() == null ? getDefaultAvatarUrl() : getAvatarUrl();
-    }
-
-    /**
      * Gets whether or not this User is a bot.
      * <p>
      * While, at the time of writing this documentation, bots cannot
@@ -139,17 +129,6 @@ public class User {
      */
     public boolean isBot() {
         return false; //bots cannot use RPC
-    }
-
-    /**
-     * Gets the User as a discord formatted mention.
-     * <p>
-     * {@code <@SNOWFLAKE_ID> }
-     *
-     * @return A discord formatted mention of this User.
-     */
-    public String getAsMention() {
-        return "<@" + id + '>';
     }
 
     @Override

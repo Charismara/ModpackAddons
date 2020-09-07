@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.assets;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.assets;
 
 import com.google.gson.annotations.SerializedName;
 

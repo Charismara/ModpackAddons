@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.pipe;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.pipe;
 
-import com.gitlab.cdagaming.craftpresence.ModUtils;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCListener;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Callback;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.DiscordBuild;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.Packet;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities.User;
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.exceptions.NoDiscordClientException;
+import de.blutmondgilde.modpackaddons.util.ModUtils;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCListener;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Callback;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.DiscordBuild;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.Packet;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities.User;
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.exceptions.NoDiscordClientException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
@@ -245,9 +245,5 @@ public abstract class Pipe {
 
     public DiscordBuild getDiscordBuild() {
         return build;
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
     }
 }

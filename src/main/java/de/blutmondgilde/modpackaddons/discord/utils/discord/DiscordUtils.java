@@ -21,25 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.impl;
+package de.blutmondgilde.modpackaddons.discord.utils.discord;
 
-/**
- * Represents an operation that accepts a single input argument and returns no
- * result. Unlike most other functional interfaces, {@code Consumer} is expected
- * to operate via side-effects.
- *
- * <p>This is a functional interface,
- * whose functional method is {@link #accept(Object)}.
- *
- * @param <T> the type of the input to the operation
- */
-public interface DataConsumer<T> {
+import de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient;
+
+public class DiscordUtils {
+    /**
+     * The current RPC Status (Ex: ready, errored, disconnected)
+     */
+    public String STATUS;
+    /**
+     * An Instance of the {@link IPCClient}, responsible for sending and receiving RPC Events
+     */
+    public IPCClient ipcInstance;
 
     /**
-     * Performs this operation on the given argument.
-     *
-     * @param t the input argument
+     * Shutdown the RPC and close related resources, as well as Clearing any remaining Runtime Client Data
      */
-    void accept(T t);
+    public synchronized void shutDown() {
+        try {
+            ipcInstance.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        // Clear User Data before final clear and shutdown
+        STATUS = "disconnected";
+    }
 }
-

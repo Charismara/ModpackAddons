@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.rpc.entities;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.entities;
 
 /**
  * Constants representing various Discord client builds,
@@ -36,7 +36,7 @@ public enum DiscordBuild {
     STABLE("//discord.com/api"),
 
     /**
-     * 'Wildcard' build constant used in {@link com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient#connect(DiscordBuild...)
+     * 'Wildcard' build constant used in {@link de.blutmondgilde.modpackaddons.discord.utils.discord.rpc.IPCClient#connect(DiscordBuild...)
      * IPCClient#connect(DiscordBuild...)} to signify that the build to target is not important, and
      * that the first valid build will be used.
      * <p>

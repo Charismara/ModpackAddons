@@ -21,33 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord.assets;
-
-import com.gitlab.cdagaming.craftpresence.utils.StringUtils;
-import com.google.common.collect.Maps;
-
-import java.util.Map;
+package de.blutmondgilde.modpackaddons.discord.impl;
 
 /**
- * Utilities related to locating and Parsing available Discord Assets
- * <p>Uses the current Client ID in use to locate Discord Icons and related Assets
+ * Represents an operation that accepts a single input argument and returns no
+ * result. Unlike most other functional interfaces, {@code Consumer} is expected
+ * to operate via side-effects.
  *
- * @author CDAGaming
+ * <p>This is a functional interface,
+ * whose functional method is {@link #accept(Object)}.
+ *
+ * @param <T> the type of the input to the operation
  */
-public class DiscordAssetUtils {
-    /**
-     * Mapping storing the Icon Keys and Asset Data attached to the Current Client ID
-     */
-    private static Map<String, DiscordAsset> ASSET_LIST = Maps.newHashMap();
+public interface DataConsumer<T> {
 
     /**
-     * Determines if the Specified Icon Key is present under the Current Client ID
+     * Performs this operation on the given argument.
      *
-     * @param key The Specified Icon Key to Check
-     * @return {@code true} if the Icon Key is present and able to be used
+     * @param t the input argument
      */
-    public static boolean contains(final String key) {
-        final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : StringUtils.formatPackIcon(key.replace(" ", "_"));
-        return ASSET_LIST.containsKey(formattedKey);
-    }
+    void accept(T t);
 }
+

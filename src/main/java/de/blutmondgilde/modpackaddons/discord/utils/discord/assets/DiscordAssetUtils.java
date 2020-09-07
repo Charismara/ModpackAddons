@@ -21,38 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.gitlab.cdagaming.craftpresence.utils.discord;
+package de.blutmondgilde.modpackaddons.discord.utils.discord.assets;
 
-import com.gitlab.cdagaming.craftpresence.utils.discord.rpc.IPCClient;
+import de.blutmondgilde.modpackaddons.discord.utils.StringUtils;
+import com.google.common.collect.Maps;
 
-public class DiscordUtils {
+import java.util.Map;
+
+/**
+ * Utilities related to locating and Parsing available Discord Assets
+ * <p>Uses the current Client ID in use to locate Discord Icons and related Assets
+ *
+ * @author CDAGaming
+ */
+public class DiscordAssetUtils {
     /**
-     * The current RPC Status (Ex: ready, errored, disconnected)
+     * Mapping storing the Icon Keys and Asset Data attached to the Current Client ID
      */
-    public String STATUS;
-    /**
-     * The Current Message tied to the current action / Details Field of the RPC
-     */
-    public String DETAILS;
-    /**
-     * The Party Session ID that's tied to the RPC, if any
-     */
-    public String PARTY_ID;
-    /**
-     * An Instance of the {@link IPCClient}, responsible for sending and receiving RPC Events
-     */
-    public IPCClient ipcInstance;
+    private static Map<String, DiscordAsset> ASSET_LIST = Maps.newHashMap();
 
     /**
-     * Shutdown the RPC and close related resources, as well as Clearing any remaining Runtime Client Data
+     * Determines if the Specified Icon Key is present under the Current Client ID
+     *
+     * @param key The Specified Icon Key to Check
+     * @return {@code true} if the Icon Key is present and able to be used
      */
-    public synchronized void shutDown() {
-        try {
-            ipcInstance.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        // Clear User Data before final clear and shutdown
-        STATUS = "disconnected";
+    public static boolean contains(final String key) {
+        final String formattedKey = StringUtils.isNullOrEmpty(key) ? "" : StringUtils.formatPackIcon(key.replace(" ", "_"));
+        return ASSET_LIST.containsKey(formattedKey);
     }
 }
